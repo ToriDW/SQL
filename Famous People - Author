@@ -1,0 +1,59 @@
+/* Create table about the people and what they do here */
+CREATE TABLE authors (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    gender TEXT);
+
+INSERT INTO authors (name, gender) VALUES ("Dean Koontz","Male");
+INSERT INTO authors (name, gender) VALUES ("Ian McEwan", "Male");
+INSERT INTO authors (name,gender) VALUES ("Nicholas Sparks", "Male");
+INSERT INTO authors (name,gender) VALUES ("JK Rowling", "Female");
+INSERT INTO authors (name,gender) VALUES ("John Grisham", "Male");
+INSERT INTO authors (name,gender) VALUES ("Stephen King", "Male");
+INSERT INTO authors (name,gender) VALUES ("Agatha Christie", "Female");
+INSERT INTO authors (name,gender) VALUES ("William Shakespeare", "Male");
+
+CREATE TABLE genre (
+    id INTEGER PRIMARY KEY,
+    author_id INTEGER,
+    name TEXT);
+    
+INSERT INTO genre (author_id, name) VALUES (1, "Thriller");
+INSERT INTO genre (author_id, name) VALUES (2, "Short Stories");
+INSERT INTO genre (author_id, name) VALUES (3, "Romantic Fiction");
+INSERT INTO genre (author_id, name) VALUES (4, "Fantasy");
+INSERT INTO genre (author_id, name) VALUES (5, "Crime");
+INSERT INTO genre (author_id, name) VALUES (6, "Horror");
+INSERT INTO genre (author_id, name) VALUES (7, "Mystery");
+INSERT INTO genre (author_id, name) VALUES (8, "Playwright");
+INSERT INTO genre (author_id, name) VALUES (2, "Gothic Literature");
+INSERT INTO genre (author_id, name) VALUES (3, "Screenwriting");
+INSERT INTO genre (author_id, name) VALUES (4, "Screenwriting");
+
+CREATE TABLE demographics (
+    id INTEGER PRIMARY KEY,
+    best_selling_book TEXT,
+    highest_gross_movie TEXT);
+
+INSERT INTO demographics (best_selling_book,highest_gross_movie) VALUES ("Odd Thomas", "Odd Thomas");
+INSERT INTO demographics (best_selling_book,highest_gross_movie) VALUES ("Atonement", "Atonement");
+INSERT INTO demographics (best_selling_book,highest_gross_movie) VALUES ("The Notebook", "Message in a Bottle");
+INSERT INTO demographics (best_selling_book,highest_gross_movie) VALUES ("Harry Potter and the Sorcerer Stone", "Harry Potter Deathly Hallows Prt 2");
+INSERT INTO demographics (best_selling_book,highest_gross_movie) VALUES ("The Firm", "The Firm");
+INSERT INTO demographics (best_selling_book,highest_gross_movie) VALUES ("The Shining", "It Chapter One");
+INSERT INTO demographics (best_selling_book,highest_gross_movie) VALUES ("And Then There Were None", "Murder on the Orient Express");
+INSERT INTO demographics (best_selling_book,highest_gross_movie) VALUES ("Hamlet", "The Lion King");
+
+/*Select 2 tables with a JOIN to see each author's name next to their genre.*/
+
+SELECT a.name,g.name
+FROM authors a
+JOIN genre g ON a.id=g.author_id;
+
+/*Add an additional query that shows only the name and genre of 'JK Rowling', using JOIN combined with WHERE*/
+
+SELECT authors.name,genre.name
+FROM authors
+JOIN genre 
+ON authors.id=genre.author_id
+WHERE authors.name="JK Rowling";
