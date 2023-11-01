@@ -1,5 +1,5 @@
 /* Create table about the people and what they do here */
-/* Create table about the people and what they do here */
+
 CREATE TABLE authors (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
