@@ -55,3 +55,35 @@ VALUES
     ('Company II', 'Telecommunications', 110.5, 2000, 1, 21, 12, 4.9),
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
+
+#1. Assign companies listed under retail as "Healthy Work Life Balance", "Acceptable", or "Poor" based on PTO days offered
+
+SELECT company_name,
+CASE 
+  WHEN paid_time_off_days>=20 THEN 'Healthy Work Life Balance'
+  WHEN paid_time_off_days>=17 THEN 'Acceptable'
+  ELSE 'Poor' 
+END as 'Work Life Balance'
+FROM fortune_companies
+WHERE industry='Retail';
+
+#2. Select all industries that offer at least 5 weeks maternity leave. 
+
+SELECT company_name,industry,maternity_leave_weeks
+FROM fortune_companies
+GROUP BY industry
+HAVING maternity_leave_weeks>=5
+ORDER BY maternity_leave_weeks desc;
+
+#3. Which companies have tenure rate of atleast 5 years and atleast 20 days of PTO
+
+SELECT company_name
+FROM fortune_companies
+WHERE avg_employee_tenure>=5
+AND paid_time_off_days>=20;
+
+#4. Show the average revenue for companies in energy.
+
+SELECT AVG(revenue)
+FROM fortune_companies
+WHERE industry='Energy';
