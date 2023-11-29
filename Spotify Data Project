@@ -1,0 +1,63 @@
+# For this project, I downloaded Spotify data from Kaggle. I created a table to insert Spotify data into. I then performed analytics on the data using SQL.
+
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+song_key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+song_mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness decimal(8,7) NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL )
+
+#1. What artist released the longest song?
+
+SELECT artist_name,track_name, Max(duration_ms) AS Length
+FROM BIT_DB.Spotifydata;
+
+#2. What artist released the shortest song?
+
+SELECT artist_name,track_name, MIN(duration_ms) AS Length
+From BIT_DB.Spotifydata;
+
+#3. List the top 10 most popular songs?
+
+SELECT track_name,popularity
+FROM BIT_DB.Spotifydata
+WHERE popularity>=90
+ORDER BY popularity desc
+LIMIT 10;
+
+#4. What is the average loudness among all the songs listed?
+
+SELECT AVG(loudness)
+FROM BIT_DB.Spotifydata;
+
+#5. List 5 songs with a higher loudness than the average loudness.
+
+SELECT artist_name,track_name,loudness FROM BIT_DB.Spotifydata
+Where loudness>(SELECT AVG(loudness) FROM BIT_DB.Spotifydata)
+ORDER BY loudness asc
+LIMIT 5;
+
+#6. Order songs based on their danceability from the least to highest.
+
+SELECT track_name,artist_name,danceability
+FROM BIT_DB.Spotifydata
+ORDER BY danceability asc;
+
+#7. How many times does the artist Dua Lip appear on the list?
+
+SELECT COUNT(artist_name) [Dua Lipa]
+FROM BIT_DB.Spotifydata
+WHERE artist_name="Dua Lipa";
