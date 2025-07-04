@@ -1,0 +1,52 @@
+Climate Conference Project
+Database: https://www.db-fiddle.com/f/pxMci1sLL945KHKYvpe9W6/1
+
+SELF JOIN:  Find VIPs work in the same association with others and provides feedback only for those who work in education.
+SELECT v1.first_name AS feedback_giver, v1.last_name AS giver_last, 
+       v2.first_name AS feedback_receiver, v2.last_name AS receiver_last
+FROM vips v1
+JOIN vips v2 ON v1.provides_feedback_to = v2.member_id
+WHERE v1.assoc_type = "education"
+
+Query with a Subquery: Find VIPs staying at the hotel with the most reservations who joined between 2000 through 2020.
+SELECT vips.first_name, vips.last_name, hotels.hotel_name
+FROM vips 
+JOIN reservations  ON vips.member_id = reservations.member_id
+JOIN hotels ON reservations.hotel = hotels.hotel_id
+WHERE reservations.hotel = (
+    SELECT hotel 
+    FROM reservations 
+    GROUP BY hotel 
+    ORDER BY COUNT(*) DESC 
+    LIMIT 1
+)AND vips.member_since BETWEEN 2000 AND 2020;
+
+
+INNER JOIN: Find the names of VIPs who have RSVP’d for the welcome event and dinner.
+SELECT vips.first_name, vips.last_name
+FROM vips 
+INNER JOIN reservations ON vips.member_id = reservations.member_id
+WHERE reservations.welcome_rsvp = 1 AND reservations.dinner_rsvp = 1;
+
+
+Multiple JOINs: Retrieve event names, attendee names, and their hotel address.
+SELECT events.event_name, vips.first_name, vips.last_name, hotels.address
+FROM vips 
+INNER JOIN events ON vips.event = events.event_id
+LEFT JOIN reservations ON vips.member_id = reservations.member_id
+LEFT JOIN hotels ON reservations.hotel = hotels.hotel_id;
+
+
+CUSTOM QUERY: Find VIPs staying at the Hyatt with the dinner reservations.
+SELECT vips.first_name, vips.last_name
+FROM vips 
+JOIN reservations ON vips.member_id = reservations.member_id
+JOIN hotels ON reservations.hotel = hotels.hotel_id
+WHERE reservations.dinner_rsvp = 1 AND
+ hotels.hotel_name = "Hyatt Downtown";
+
+
+CUSTOM QUERY: List the first and last name of all the attendees whose association is research.
+SELECT vips.last_name, vips.first_name
+FROM vips
+WHERE vips.assoc_type = "research"
